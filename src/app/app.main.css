@@ -1,0 +1,26 @@
+.mat-toolbar-single-row {
+  height: 50px;
+}
+
+.main-content-container {
+  margin-top: 50px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
+}
+
+.main-sidenav {
+  min-width: 230px;
+}
+
+.main-content {
+  padding: 10px 25px 10px 25px;
+}
+
+mat-sidenav-container, mat-toolbar{
+  max-width: 1600px;
+  margin: auto;
+}

@@ -1,0 +1,15 @@
+<a [routerLink]="['/']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}">Home</a> <br>
+
+<div *ngFor="let maintopics of menuStructure; index as topicIndex" class="maintopic">
+  {{maintopics.maintopic}}
+  <div *ngFor="let subtopic of maintopics.subtopics; index as subtopicIndex" class="subtopic">
+    &nbsp;{{subtopic.subtopic}}
+    <ul>
+      <li *ngFor="let entry of subtopic.entries">
+        <a [routerLink]="[maintopics.maintopic + '/' + entry.pathkey]" routerLinkActive="router-link-active">
+          {{entry.title}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

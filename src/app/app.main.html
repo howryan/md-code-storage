@@ -1,0 +1,14 @@
+<mat-toolbar>  
+  <span>Code Storage</span> 
+</mat-toolbar>
+
+<mat-sidenav-container class="main-content-container">
+  <mat-sidenav class="main-sidenav" mode="side" opened>
+    <app-side-nav></app-side-nav>
+  </mat-sidenav>
+
+	<mat-sidenav-content class="main-content">
+		<router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

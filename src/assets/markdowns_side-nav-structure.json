@@ -1,0 +1,24 @@
+{
+  "menu_structure": [
+    {
+      "maintopic": "Java",
+      "subtopics": [
+        {
+          "subtopic": "Java Buch",
+          "entries": [
+            {
+              "title": "OO-Design & Java Grundlagen",
+              "pathkey" : "java-design-and-fundamentals"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pathKeys" : {
+    "java-design-and-fundamentals": [
+      "assets/md/java/java_buch/1_java_oo_design.md",
+      "assets/md/java/java_buch/2_java_grundlagen.md"
+    ]
+  }
+}
