@@ -3,8 +3,8 @@
 * **Dekleration**: Typ und Name einer Variable. Bei Methoden die Signatur.
 * **Kapselung (Information Hiding)**: `get()`- und `set()`-Methoden (_Accessors_ und _Mutators_) anstelle von direktem Zugriff auf Attribute. 
 * **Objektverhalten**: Komplexe interne Vorgänge werden von `private`-Methoden (Hilfsmethoden) umgesetzt. Methoden mit einem hohem Abstraktionsgrad, die die Schnittstelle nach außen bilden, werden als **Business-Methoden** bezeichnet.
-* **Kohäsion**: Maß das beschreibt, inwieweit eine Klasse eine spezielle Funktionalität erfüllt. Hohe Kohäsion => Genau eine Aufgabe. Niedrige Kohäsion => viele unterschiedliche Funktionalität in einer Klasse 
-  * **Orthogonalität**: Freie Kombinierbarkeit unabhängiger Konzepte bzw. hier von Methoden und Klassen wird erreicht, sodass diese nur eine Aufgabe erfüllen => Auslagern von Code in Methoden anstatt ihn zu kopieren.
+* **Kohäsion**: Maß das beschreibt, inwieweit eine Klasse eine spezielle Funktionalität erfüllt. Hohe Kohäsion ⇒ Genau eine Aufgabe. Niedrige Kohäsion ⇒ viele unterschiedliche Funktionalität in einer Klasse 
+  * **Orthogonalität**: Freie Kombinierbarkeit unabhängiger Konzepte bzw. hier von Methoden und Klassen wird erreicht, sodass diese nur eine Aufgabe erfüllen ⇒ Auslagern von Code in Methoden anstatt ihn zu kopieren.
 * **Assoziationen**:
   * Aggregation: Zwei Objekte sind verbunden, können aber unabhängig voneinander bestehen
   * Komposition: Ein Teilobjekt kann nicht ohne das Ganze bestehen.
@@ -17,7 +17,7 @@
 
 # Fortgeschrittenere OO-Techniken
 ## Read-only-Interface
-* Interface, das ausschließlich Lesezugriff auf Attribute anbieten und so verhindert, dass der Objektzustand verändert werden kann. Ausnahme bei Referenzvariablen, die Objekte zurückgeben, deren Werte dann verändert werden können.
+* Interface, das ausschließlich Lesezugriff auf Attribute anbietet und so verhindert, dass der Objektzustand verändert werden kann. Ausnahme bei Referenzvariablen, die Objekte zurückgeben, deren Werte dann verändert werden können.
 * Collections können als `Collections.unmodifiableList(Collection c)` zurückgeliefert werden.
   * **Flache Kopie (Shallow Copy)**: Mit `ArrayList<Typ>(Collection c)` lässt sich eine neue Liste, aber den ursprünglichen Referenzen erzeugen. Primitive Typen werden kopiert.
   * **Tiefe Kopie (Deep Copy)**: Jedes Objekt muss einzeln rekursiv oder iterativ kopiert werden.
@@ -73,7 +73,7 @@ Vermeide Chaining: `ownObject.getObjA().getObjB().methodB()`
 * **Diamond Operator <>**: Bei der Objekt-Initialisierung ist es nicht mehr notwendig, den Typen explizit mitzugeben
   * Bsp:. `final Map<String, Set<String> > newMap = new HashMap<>`
 * Typeinschränkungen für Klassen durch `extends` und '&'
-  * Bsp.: `public class GenericClass<T extends BaseType & Interface1 & Interface2`
+  * Bsp.: `public class GenericClass<T extends BaseType & Interface1 & Interface2>`
 * Typeinschränkungen für (statische) Methoden
   * `public static void doSth(final List<? extends BaseFigure> figures)`
   * `public static <T extends BaseFigure> void doSth(final List<T> figures)` (Alternativ schreibweise)

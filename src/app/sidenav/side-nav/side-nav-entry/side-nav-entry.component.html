@@ -1,0 +1,20 @@
+
+<ng-container
+  *ngIf="topic.pathKey; then foundPathKey; else noPathKey">
+</ng-container>
+<ng-template #foundPathKey>
+  <a [routerLink]="[encodeTitle(topic.title) + '/' + topic.pathKey]" routerLinkActive="router-link-active">
+    {{topic.title}}
+  </a>
+</ng-template>
+<ng-template #noPathKey>
+  {{topic.title}}
+</ng-template>
+
+<ng-container *ngIf="topic.subtopics ">
+  <ul>
+    <li *ngFor="let entry of topic.subtopics">
+      <app-side-nav-entry [topic]="entry"></app-side-nav-entry>
+    </li>
+  </ul>
+</ng-container>

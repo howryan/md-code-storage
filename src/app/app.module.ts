@@ -15,6 +15,7 @@ import { AppComponent } from './app.main';
 import { DetailContentComponent } from './content/detail-content/detail-content.component';
 import { HomeContentComponent } from './content/home-content/home-content.component';
 import { SideNavComponent } from './sidenav/side-nav/side-nav.component';
+import { SideNavEntryComponent } from './sidenav/side-nav/side-nav-entry/side-nav-entry.component';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import { SideNavComponent } from './sidenav/side-nav/side-nav.component';
     HttpClientModule,
     MarkdownModule.forRoot({ loader: HttpClient })
   ],
-  declarations: [AppComponent, DetailContentComponent, HomeContentComponent, SideNavComponent],
+  declarations: [AppComponent, DetailContentComponent, HomeContentComponent, SideNavComponent, SideNavEntryComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

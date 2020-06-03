@@ -12,12 +12,15 @@ export class DetailContentComponent implements OnInit {
 
   paths: any;
 
-  constructor(private activatedRoute: ActivatedRoute, private markdownFileService: MarkdownFilesService) { }
+  constructor(private route: ActivatedRoute, private markdownFileService: MarkdownFilesService) { }
 
   ngOnInit() {
-    let mainTopic = this.activatedRoute.snapshot.params['mainTopic'];
-    let pathKey = this.activatedRoute.snapshot.params['pathKey'];
+    //let mainTopic = this.activatedRoute.snapshot.params['mainTopic'];
+    //let pathKey = this.route.snapshot.params['pathKey'];
 
-    this.paths = this.markdownFileService.getPathKeys(pathKey);
+    this.route.params.subscribe(routeParams => {
+      this.paths = this.markdownFileService.getPathKeys(routeParams.pathKey);
+    })
+
   }
 }
