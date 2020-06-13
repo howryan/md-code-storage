@@ -1,21 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from './app-routing.module';
+import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatCardModule} from '@angular/material/card';
+import {HttpClientModule} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
+import {MatTreeModule} from "@angular/material/tree";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
-import { MarkdownModule } from 'ngx-markdown';
+import {MarkdownModule} from 'ngx-markdown';
 
-import { AppComponent } from './app.main';
-import { DetailContentComponent } from './content/detail-content/detail-content.component';
-import { HomeContentComponent } from './content/home-content/home-content.component';
-import { SideNavComponent } from './sidenav/side-nav/side-nav.component';
-import { SideNavEntryComponent } from './sidenav/side-nav/side-nav-entry/side-nav-entry.component';
+import {AppComponent} from './app.main';
+import {DetailContentComponent} from './content/detail-content/detail-content.component';
+import {HomeContentComponent} from './content/home-content/home-content.component';
+import {SideNavComponent} from './sidenav/side-nav/side-nav.component';
+import {SideNavEntryComponent} from './sidenav/side-nav/side-nav-entry/side-nav-entry.component';
 
 
 @NgModule({
@@ -27,10 +30,14 @@ import { SideNavEntryComponent } from './sidenav/side-nav/side-nav-entry/side-na
     MatSidenavModule,
     MatToolbarModule,
     MatCardModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule,
     HttpClientModule,
-    MarkdownModule.forRoot({ loader: HttpClient })
+    MarkdownModule.forRoot({loader: HttpClient}),
   ],
   declarations: [AppComponent, DetailContentComponent, HomeContentComponent, SideNavComponent, SideNavEntryComponent],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

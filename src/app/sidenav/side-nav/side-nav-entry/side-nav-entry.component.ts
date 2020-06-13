@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class SideNavEntryComponent implements OnInit {
 
-  @Input() topic: any;
+  @Input() node: any;
 
   constructor() { }
 

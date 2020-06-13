@@ -4,6 +4,27 @@
   padding-left: 5px;
 }
 
-div {
-  padding-left: 5px;
+.tree-invisible {
+  display: none;
+}
+
+.node-padding {
+  padding-left: 24px;
+}
+
+.side-nav-tree ul, .side-nav-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.mat-tree-node {
+  min-height: 10px;
+  height: 24px;
+  line-height: 24px;
+  font-size: 13px;
+}
+
+.mat-icon-button {
+  width: auto;
 }

@@ -20,3 +20,12 @@ mat-sidenav-container, mat-toolbar{
   max-width: 1600px;
   margin: auto;
 }
+
+mat-toolbar {
+  padding-left: 0;
+}
+
+mat-sidenav {
+  padding-top: 10px;
+  padding-right: 15px;
+}

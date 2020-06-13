@@ -1,5 +1,28 @@
 <a [routerLink]="['/']" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}">Home</a> <br>
 
-<div *ngFor="let topic of menuStructure" class="maintopic">
-  <app-side-nav-entry [topic]="topic"></app-side-nav-entry>
-</div>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="side-nav-tree">
+
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+    <li class="mat-tree-node">
+      <button mat-icon-button disabled></button>
+      <app-side-nav-entry [node]="node"></app-side-nav-entry>
+    </li>
+  </mat-tree-node>
+
+  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+    <li>
+      <div class="mat-tree-node">
+        <button mat-icon-button [attr.aria-label]="'toggle ' + node.title" matTreeNodeToggle>
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          </mat-icon>
+        </button>
+        <app-side-nav-entry [node]="node"></app-side-nav-entry>
+      </div>
+      <ul [class.tree-invisible]="!treeControl.isExpanded(node)" [class.node-padding]="hasNestedChild">
+        <ng-container matTreeNodeOutlet></ng-container>
+      </ul>
+    </li>
+  </mat-nested-tree-node>
+
+</mat-tree>

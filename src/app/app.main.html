@@ -1,9 +1,10 @@
 <mat-toolbar>
-  <span>Code Storage</span>
+  <button mat-icon-button (click)="sideNav.toggle()"><mat-icon>menu</mat-icon></button>
+  <span>&nbsp;Simple Markdown Knowledgebase</span>
 </mat-toolbar>
 
-<mat-sidenav-container class="main-content-container">
-  <mat-sidenav class="main-sidenav" mode="side" opened>
+<mat-sidenav-container class="main-content-container" [autosize]="true">
+  <mat-sidenav #sideNav class="main-sidenav" mode="side" [opened]="opened">
     <app-side-nav></app-side-nav>
   </mat-sidenav>
 
