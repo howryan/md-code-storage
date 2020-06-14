@@ -2,10 +2,10 @@
   "menu_structure": [
     {
       "title": "Java",
-      "subtopics": [
+      "children": [
         {
           "title": "Java Buch",
-          "subtopics": [
+          "children": [
             {
               "title": "OO-Design and Java Grundlagen",
               "pathKey": "java-design-and-fundamentals"
@@ -13,28 +13,11 @@
           ]
         }
       ]
-    },
-    {
-      "title": "Java Grundlagen",
-      "pathKey": "java-fundamentals-2",
-      "subtopics": [
-        {
-          "title": "OO-Design and Java Grundlagen 1",
-          "pathKey": "java-design-and-fundamentals"
-        },
-        {
-          "title": "OO-Design and Java Grundlagen 2",
-          "pathKey": "java-fundamentals-2"
-        }
-      ]
     }
   ],
   "pathKeys": {
     "java-design-and-fundamentals": [
       "assets/md/java/java_buch/1_java_oo_design.md",
-      "assets/md/java/java_buch/2_java_grundlagen.md"
-    ],
-    "java-fundamentals-2": [
       "assets/md/java/java_buch/2_java_grundlagen.md"
     ]
   }

@@ -28,20 +28,19 @@ export class SideNavComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.data = this.markdownFileService.getMenuStructure();
-    this.configureExpandAndCollapse(this.dataSource.data);
+    this.collapseAndExpandNodes(this.dataSource.data);
   }
 
   //Check if a current node has children or is a leaf
   hasNestedChild = (_: number, nodeData: TreeNode) => nodeData.children && nodeData.children.length > 0;
 
 
-  private configureExpandAndCollapse(dataNodesArray: TreeNode[]) {
+  private collapseAndExpandNodes(dataNodesArray: TreeNode[]) {
     //Set data nodes to enable collapse and expand via treeControl
     this.treeControl.dataNodes = dataNodesArray;
     this.treeControl.collapseAll();
 
     let pathname = location.pathname;
-
     if (pathname && pathname.lastIndexOf("/") > 0) {
       let pathKey = pathname.substring(pathname.indexOf("/", 1) + 1, pathname.length)
       this.expandSpecificNode(pathKey, this.treeControl.dataNodes);
