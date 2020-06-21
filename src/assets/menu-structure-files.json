@@ -1,0 +1,30 @@
+{
+  "menu_structure": [
+    {
+      "title": "Java",
+      "children": [
+        {
+          "title": "Java Buch",
+          "children": [
+            {
+              "title": "1. OO-Design and Java Grundlagen",
+              "pathKey": "oo_design"
+            },
+            {
+              "title": "2. Java Grundlagen",
+              "pathKey": "java_fundamentals"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "pathKeys": {
+    "oo_design": [
+      "assets/md/java/java_buch/1_java_oo_design.md"
+    ],
+    "java_fundamentals" : [
+      "assets/md/java/java_buch/2_java_grundlagen.md"
+    ]
+  }
+}

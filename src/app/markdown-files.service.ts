@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import MarkdownsJson from '../assets/markdowns_side-nav-structure.json';
+import MarkdownsJson from '../assets/menu-structure-files.json';
 
 
 @Injectable({

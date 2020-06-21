@@ -2,7 +2,7 @@
 * **Objekzustand**: Wertebelegung aller Attribute eines Objekts.
 * **Dekleration**: Typ und Name einer Variable. Bei Methoden die Signatur.
 * **Kapselung (Information Hiding)**: `get()`- und `set()`-Methoden (_Accessors_ und _Mutators_) anstelle von direktem Zugriff auf Attribute. 
-* **Objektverhalten**: Komplexe interne Vorgänge werden von `private`-Methoden (Hilfsmethoden) umgesetzt. Methoden mit einem hohem Abstraktionsgrad, die die Schnittstelle nach außen bilden, werden als **Business-Methoden** bezeichnet.
+* **Objektverhalten**: Komplexe interne Vorgänge werden von `private`-Methoden (Hilfsmethoden) umgesetzt. Methoden mit einem hohen Abstraktionsgrad, die die Schnittstelle nach außen bilden, werden als **Business-Methoden** bezeichnet.
 * **Kohäsion**: Maß das beschreibt, inwieweit eine Klasse eine spezielle Funktionalität erfüllt. Hohe Kohäsion ⇒ Genau eine Aufgabe. Niedrige Kohäsion ⇒ viele unterschiedliche Funktionalität in einer Klasse 
   * **Orthogonalität**: Freie Kombinierbarkeit unabhängiger Konzepte bzw. hier von Methoden und Klassen wird erreicht, sodass diese nur eine Aufgabe erfüllen ⇒ Auslagern von Code in Methoden anstatt ihn zu kopieren.
 * **Assoziationen**:
@@ -13,28 +13,31 @@
 * **Overloading**: Definition von Methoden mit gleichen Namen, aber unterschiedlichen Parametern
 * **Sub-Classing**: Spezialisierung durch Vererbung von Klassen
 * **Sub-Typing**: Spezialisierung durch Vererbung von Interfaces
-* **Polymorphie**: Verschiedene Objekte können beim Aufruf von gleichen Methoden unterschiedliches Verhalten implementieren in Abhängigkeit zu ihrem Typ zur Laufzeit.
+* **Polymorphie**: Basiert auf dem Unterschied zwischen Kompiliertyp und Laufzeittyp. Verschiedene Objekte können beim Aufruf von gleichen Methoden unterschiedliches Verhalten implementieren in Abhängigkeit zu ihrem Typ zur Laufzeit.
 
 # Fortgeschrittenere OO-Techniken
 ## Read-only-Interface
 * Interface, das ausschließlich Lesezugriff auf Attribute anbietet und so verhindert, dass der Objektzustand verändert werden kann. Ausnahme bei Referenzvariablen, die Objekte zurückgeben, deren Werte dann verändert werden können.
+* Interfaces erhalten nur Getter-Methoden
 * Collections können als `Collections.unmodifiableList(Collection c)` zurückgeliefert werden.
   * **Flache Kopie (Shallow Copy)**: Mit `ArrayList<Typ>(Collection c)` lässt sich eine neue Liste, aber den ursprünglichen Referenzen erzeugen. Primitive Typen werden kopiert.
   * **Tiefe Kopie (Deep Copy)**: Jedes Objekt muss einzeln rekursiv oder iterativ kopiert werden.
 
 ## Immutable-Klasse
 * Der Objektzustand von soll nach der Objekterzeugung erhalten bleiben. Erreicht wird dies über Variablen die als `final` deklariert werden.
-* Trick für Veränderbarikeit: Methode die ein Objekt zurückliefert mit modifizierten Attributen die über Parameter mitgegeben werden können:
-  * `public ImmutableValue(final int x) { return new ImmutableValue(this.x + x) }`
-
+  * Bsp.: 2D-Koordinaten, die durch x und y repräsentiert werden und nicht verändert  werden dürfen.
 ## Marker-Interface
 * Ein leeres Interface ohne Methoden und Konstanten, dass somit eine Klasse "markiert" und ausdrückt, dass eine bestimmte Eigenschaft erfüllt werden soll. 
-  * Bsp.: Das Interface `Serializable` markiert Klasse, die sich von der integrierten Serialisierungsautomatik der JVM verarbeiten lassen
+  * Bsp.: Das Interface `Serializable` markiert Klasse, die sich von der integrierten Serialisierungsautomatik der JVM verarbeiten lassen.
 
 ## Konstantensammlungen und Aufzählungen
 * Zentrale Definition und Gruppierung von konstanten Werten, bspw. in einer "Constants"-Klasse oder mittels Enums.
-* `EnumSet<E>`: Verwaltung von Enum-Mengen als Collection bzw. Set mit speziellen Methoden für Enums. Mit `allOf(ExampleEnum.class)` können alle verfügbaren Enums in die Menge hinzugefügt werden.
-* **Varargs**: Notation für eine Methode, die beliebig viele Parameter erlaubt durch folgende Notation: `public void method(String... s){ // }`
+* `EnumSet<E>`: Verwaltung von Enum-Mengen als Collection bzw. Set mit speziellen Methoden für Enums. 
+  * Mit `allOf(ExampleEnum.class)` können alle verfügbaren Enums in die Menge hinzugefügt werden:  
+  Bsp.: `final EnumSet<FontAttributesEnum> = EnumSet.allOf(FontAttributesEnum.class)`
+  * Weitere Methoden: `of(E first, E... others), range(E from, E to), noneOf(Class<E> elementType)`
+* **Varargs**: Notation für eine Methode, die beliebig viele Parameter erlaubt durch folgende Notation:  
+`public void method(String... stringArguments){ //stringArguments wird als Array übergeben }`
 * Die Klasse **`Class<E>`** erhält man via `.class`-Aufruf. Sie erlaubt den Zugriff auf Metainformationen der Klasse E bspw. auf Sichtbarkeiten.
 
 ## Value Object (Data Transfer Object - DTO)
@@ -45,11 +48,11 @@
 ## Geheimnisprinzip nach Parnas
 * **Information Hiding**: Klassen und Packages die von anderen Komponenten genutzt werden, sollten alle Implementierungsdetails verbergen. Realisiert wird dies, indem nur Business-Methoden bereitgestellt werden.
 ## Law of Demeter
-* Reduktion der Kopplung auf ein verständliches und wartbares Maß. Deswegen Nutze nur...
+* Reduktion der Kopplung auf ein verständliches und wartbares Maß. Deswegen nutze nur...
 1. Methoden der eigenen Klasse: `this.isAdult = isOlderThen(18)`
 2. Methoden von Objekten, die als Parameter übergeben werden: `boolean sameAge(Person other) { return getAge() == other.getAge() }`
 3. Methoden von Objekten, die das eigene Objekt selbst erzeugt hat
-4. Methoden assoziierter Klasse
+4. Methoden assoziierter Klasse  
 Vermeide Chaining: `ownObject.getObjA().getObjB().methodB()`
 ## SOLID-Prinzipien
 * **S - Single Responsibility Principle**: Jede Klasse soll möglichst genau eine klar definierte Aufgabe erfüllen. Führt zu hoher Kohäsion und Orthogonalität.
@@ -64,7 +67,7 @@ Vermeide Chaining: `ownObject.getObjA().getObjB().methodB()`
 * **Kovarianz**: Die Rückggabetypen folgen der Vererbungshierarchie in die gleiche Richtung. 
   * `class BaseClass { Base method() } `
   * `class SubClass extends BaseClass { Sub method() }`
-* **Kontravarianz**: Die Typen der Methodenparameter sind entgegengesetzt zur Vererbungshierarchie, sodass kein Überschreibung stattfindet!
+* **Kontravarianz**: Die Typen der Methodenparameter sind entgegengesetzt zur Vererbungshierarchie, sodass keine Überschreibung stattfindet!
   * `class BaseClass { void method(Sub s) } `
   * `class SubClass extends BaseClass { void method(Base b) }`
 
