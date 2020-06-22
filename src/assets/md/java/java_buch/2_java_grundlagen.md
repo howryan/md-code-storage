@@ -3,7 +3,7 @@
 * `StringBuffer` ist threadsicher, `StringBuilder` hingegen nicht.
 * Stringkonkatenationen mit dem Operator '+' werden bei der Kompilierung durch `StringBuilder`-Methoden ersetzt
 * Der Operator '+=' erzeugt viele temporäre Objekte und kann an Performance-kritschen Stellen zu Problemen führen. Deshalb sollte man in diesen Fällen den `StringBuilder` Nutzen mit `append()`.
-* Mit der Methode `.toString()` auf einem Objekt lässt sich der String ausgeben
+* Mit der Methode `.toString()` auf einem Objekt lässt sich diese als String ausgeben
 
 ## Ausgaben mit `String.format()` und `PrintStream.printf()`
 ```java
@@ -11,8 +11,6 @@ final Object[] sampleArgs = {"pi", 3.1415, 1337};
 final String str = String.format("%S='%2.3f' Zahl='%,d'", sampleArgs); //PI='3,141' Zahl='1.337'
 System.out.printf("%S='%2.3f' Zahl='%,d'", "pi", 3.1415, 1337); //PI='3,141' Zahl='1.337'
 ``` 
-* `format(String, Object[])` liefert ein Strinobjekt zurück, das ausgegeben werden kann.
-* Bei `printf(String, Object[])` muss kein Stringobjekt erzeugt werden für eine Ausgabe.
 * `%s`: Strings, `%S`: Strings in Großbuchstaben, `%d`: Dezimale Zahlen, `%,d` Dezimale Zahlen mit Tausenderpunkten
 * `%f` & `%m.nf`: Gleitkommazahlen mit `m` für #Vorkommastellen & `n` für #Nachkommastellen
 * `%x` & `%X`: Hexadezimale Zahlen, `%b`: boolsche Werte
@@ -77,7 +75,28 @@ final OuterClass.StaticInnerClass inner = new OuterClass.StaticInnerClass();
 ```
 * **Methodenlokale innere Klasse** werden in einer Methode definiert und haben neben den Zugriffen auf die Attribute und Methoden der äußeren Klasse auch Zugriff auf die `final`-Parameter und `final`-Variablen der Methode in der sie definiert sind. Wenn diese nicht `final` sind, dann sind sie nur erlaubt, sofern sie sich nicht ändern.
   * ENUMS lassen sich nicht methodenlokal definieren.
-* **Anonyme innere Klasse** werden für einmalige Aufgaben angewendet, wobei sie nicht einmal erzeugt werden. Sie basieren auf einem Interface oder erweitern eine Klasse. Die Methode(n) der Basisklasse werden hierbei überschrieben oderdie des Interfaces werden "implementiert". Es können weitere Methoden definiert werden, die können jedoch von Außen nicht aufgerufen werden. 
+```java
+public class OuterClass {
+    String s1 = "Variable OuterClass.s1 called";
+    public void print() {
+        String s2 = "Variable s2 in OuterClass.print() called";
+        class InnerClass { //Keine Sichtbarkeitsmodifier erlaubt!
+            String s3 = "Variable InnerClass.s3 called";
+            InnerClass() {
+                System.out.println(s1); // Variable OuterClass.s1 called
+                System.out.println(s2); // Variable s2 in OuterClass.print() called
+                System.out.println(s3); // Variable InnerClass.s3 called
+            }
+        }
+        new InnerClass(); //Erzeugung nur innerhalb der Methode möglich
+    }
+
+    public static void main(String[] args) {
+        new OuterClass().print();
+    }
+}
+```
+* **Anonyme innere Klasse** werden für einmalige Aufgaben angewendet, wobei sie nicht einmal erzeugt werden. Sie basieren auf einem Interface oder erweitern eine Klasse. Die Methode(n) der Basisklasse werden hierbei überschrieben oder die des Interfaces werden "implementiert". Es können weitere Methoden definiert werden, die können jedoch von Außen nicht aufgerufen werden. 
  ```java
 final Runnable newRunnable = new Runnable() {
 	@Override
@@ -107,8 +126,35 @@ final FileFilter xmlFilter = (final File file) -> {
 }
 ```
 ## Ein- und Ausgabestreams im Überblick
-* `InputStream` und `Reader`: Abstrakte Klasse zum Lesen von Daten und zum Prüfen, ob Daten zum Einlesen vorliegen.
-* `OutputStream` und `Writer`: Alle Ausgabestream bieten Methoden zum Schreiben von Daten in einen Stream.
-* Durch einen `InputStreamReader` wird ein `InputStream` in einen `Reader` umgewandelt. Dies gilt analog für einen `OutputStreamWriter` der einen `OutputStream` in einen `Writer` umwandelt.
+* `InputStream` und `OutputStream` arbeiten byteorientiert, wohingegen `Reader` und `Writer` zeichenbasiert (mittels `char`s) sind.
+* **Konvertierung:** Eine Konvertierung kann mittels eines `InputStreamReader`s erfolgen, der einen `InputStream` in einen `Reader` umwandelt. Analag gilt dies für einen `OutputStreamWriter`, der einen `Outputstream` in einen `Writer` umwandelt.
+## Zeichencodierungen bei der Ein- und Ausgabe
+* Um ein `char` in ein Byte umzuwandeln, gibt es Charsets bzw. Zeichenkodierungen, die Zeichen auf Zahlenwerte abbilden. 
+  * Bsp.: Ä mittels UTF-8 wird zu: -61, -124; Ä mittels ISO-8859-1 wird zu -60
+* Zugriff auf ein Charset ist nur mittels des Namen möglich: `Charset.forName("UTF-8")`
 
+## Dateiverarbeitung in JDK 7
+### Das Interface `Path`
+* Das Interface `Path` wird ein Pfad oder eine Datei repräsentiert, die verarbeitet werden soll
+  * Zugriff mittels `Paths.get(String)` oder `FileSystem.getPath(String, String...)`
+    * Erzeugen eines `FileSystem`: `final FileSystem local = FileSystems.getDefault();`
+  * Die Hilfsklasse `Files` ist für die eigentlichen Aktionen zuständig: `copy(Path, Path, CopyOption...)` und `move(Path, Path, CopyOption...)`
+* Das Interface `Path` hält viele nützliche Funktionen bereit: `subpath(int, int)` oder `relativize(Path)`
+* Ein `File` kann mittels `toPath()` umgewandelt werden
 
+## Das Interface `DirectoryStream`
+* Das Interface `DirectoryStream` biete eine effiziente Möglichkeit um über eine große Anzahl an Verzeichnissen zu iterieren
+```Java
+try (DirectoryStream<Path> dirStream = Files.newDirectoryStream( new File(".").toPath()) ) {
+    dirStream.forEach(entry -> System.out.println(entry));
+}
+```
+
+## Erweiterungen im NIO und der Klasse `Files` in JDK 8
+* `java.nio.file.Files` wurde um verschiedene Hilfsmethoden erweitert
+  * `lines(Path)`: Datei wird zeilenweise als Stream<String> bereitgestellt
+  * `readAllLines(Path)`: Liest die Datei zeilenweise ein und gibt die Zeilen als List<String> zurück
+  * `list(Path)`: Liefert den Inhalt eines Verzeichnisses als `Stream<Path>` zurück
+  * `write(Path, Iterable<? extends CharSequence>, OpenOption...)`: Schreibt Textzeilen in die Path-Datei. `OpenOption`: `APPEND` oder `WRITE` 
+
+# Fehlerbehandlung
