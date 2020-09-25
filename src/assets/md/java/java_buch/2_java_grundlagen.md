@@ -158,3 +158,57 @@ try (DirectoryStream<Path> dirStream = Files.newDirectoryStream( new File(".").t
   * `write(Path, Iterable<? extends CharSequence>, OpenOption...)`: Schreibt Textzeilen in die Path-Datei. `OpenOption`: `APPEND` oder `WRITE` 
 
 # Fehlerbehandlung
+## Checked und Unchecked Exceptions
+* **Checked Exceptions** geben eine durch den Aufrufer zu erwartende Fehlersituation an und müssen daher in der Methodensignatur mit dem Schlüsselwort `throws` angegeben werden
+  * Bsp.: `ParseException` oder `IOException`
+* **Uncheck Exceptions** stehen für schwerwiegende Probleme und unerwartete Situationen, auf die nicht sinnvoll reagiert werden kann. Somit sind diese auch nicht Bestandteil einer Methodensignatur (obwohl sie dort angegeben werden können)
+  * `RuntimeException`, `NullPointerException`, `IndexOutOfBoundsException`, `IllegalArgumentException`, `IllegalStateException`
+
+##Nutzung von `finally`
+* Der `finally`-Block nach einem `try-catch` wird immer ausgeführt. Dies ist unabhängig davon, ob
+  * der `try`-Block normal beendet,
+  * eine Exception im `try`-Block geworfen oder
+  * ein `return` im `try`- und `catch`-Block ausgeführt wird
+  
+## Besonderheiten beim Exception Handling mit JDK7
+
+### Multi Catch (JDK 7)
+* Wenn mehrere Exception-Typen gleich behandelt werden sollen, ist es möglich diese in einem `catch`-Block zusammenzufassen.
+```java
+try {
+    sampleMethode();
+}
+catch(final RemoteException | FileNotFoundException ex) {
+    reportException(ex);
+}
+```
+* Dies ist nur möglich, wenn die Exception unterschiedliche Basistypen besitzen.
+  * `catch(final FileNotFoundException | IOException ex)` ist somit nicht erlaubt und führt zu einem Compile-Error
+
+### Automatic Resource Management (ARM)
+* Durch die Schreibweise mit Klammern bei einem `try`-Block, ist es nicht mehr notwendig, selbst die Freigabe von Ressource zu verwalten
+* Im nachfolgenden Beispiel werden beide Streams automatisch geschlossen, durch den impliziten Aufruf von `close()`
+```java
+try(FileInputStream inS=new FileInputStream(new File("E:\\Test\\sample.txt"));
+    FileOutputStream outS=new FileOutputStream(new File("E:\\Test\\duplicate.txt")))
+    {
+        byte[] buffer=new byte[1024];
+        int length;
+        while((length=inS.read(buffer))>0){
+            outS.write(buffer,0,length);
+        }
+    }catch(IOException ioe){
+        ioe.printStackTrace();
+    }
+```
+* Voraussetzung: Die definierten müssen das Interface `java.lang.AutoCloseable` erfüllen.
+
+## Assertions
+* Absicherung von Zuständen mittels Schlüsselwort `assert`. Falls `false` evaluiert wird, wird ein `AssertionError` (Untertyp von `Throwable`) geworfen.
+  * Bsp.: `assert exampleVariable != null;` bzw. mit Kontextinformationen: `assert exampleVariable != null : "The variable exampleVariable is null!";`
+  * `AssertionError`s können zwar durch einen `try-catch`-Block abgefangen werden, dies ist jedoch selten sinnvoll, da hiermit Fehler aufgedeckt werden sollen.
+  * Die Verarbeitung von Assertions ist für die JVM standardmäßig deaktiviert und muss explizit aktiviert werden, mittels -ea oder -da.
+* Assertions lassen sich zur Laufzeit an- und ausschalten und sind deswegen eher als ein löchriges Sicherheitsnetz zu betrachten, was als Argument dafür aufgefasst werden kann eher Exceptions zu nutzen.
+* Java Language Specification: Assertions für Situationen die "niemals" auftreten können/sollen.
+* Assertions können als semantischer Kommentar genutzt werden: `assert form != null : "Form must not be null"` .
+* Assertions sollten niemals Seiteneffekte verursachen bzw. Änderungen am Objektzustand vornehmen, wie bspw. die Zuweisung eines Wertes zu einer bestehenden Variable.

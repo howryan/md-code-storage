@@ -13,6 +13,14 @@
             {
               "title": "2. Java Grundlagen",
               "pathKey": "java_fundamentals"
+            },
+            {
+              "title": "3. Java Lambdas",
+              "pathKey": "java_lambdas"
+            },
+            {
+              "title": "4. Java Collections, Set & Map",
+              "pathKey": "java_collections"
             }
           ]
         }
@@ -25,6 +33,12 @@
     ],
     "java_fundamentals" : [
       "assets/md/java/java_buch/2_java_grundlagen.md"
+    ],
+    "java_lambdas" : [
+      "assets/md/java/java_buch/3_java_lambdas.md"
+    ],
+    "java_collections" : [
+      "assets/md/java/java_buch/4_java_collections.md"
     ]
   }
 }
